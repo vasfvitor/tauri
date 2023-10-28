@@ -2,12 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-name: dispatch-test-2
+name: dispatch-test-'1.33'
+
 
 on:
   push:
     branches:
-      - dev
+      - '1.33'
 
 jobs:
   version-or-publish:
