@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
-      - name: Trigger doc update
+      - name: Trigger sdoc update
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
