@@ -7,7 +7,7 @@ name: dispatch-test
 on:
   push:
     branches:
-      - dev
+      - '*'
 
 jobs:
   version-or-publish:
