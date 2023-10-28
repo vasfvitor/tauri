@@ -7,7 +7,7 @@ name: dispatch-test-2
 on:
   push:
     branches:
-      - '1.33'
+      - dev
 
 jobs:
   version-or-publish:
