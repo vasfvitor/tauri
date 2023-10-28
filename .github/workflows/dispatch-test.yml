@@ -7,13 +7,14 @@ name: dispatch-test
 on:
   push:
     branches:
-      - 1.2
+      - 'dev'
 
 jobs:
   version-or-publish:
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
+      - run: echo Triggered from /1.2 - on push of dev
       - name: Trigger doc update
         uses: peter-evans/repository-dispatch@v1
         with:
@@ -21,4 +22,3 @@ jobs:
           repository: vasfvitor/tauri-docs
           event-type: dispatch-test
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
-
