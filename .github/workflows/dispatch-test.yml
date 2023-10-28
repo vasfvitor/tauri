@@ -2,23 +2,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-name: dispatch-test-'1.33'
-
+name: dispatch-test-133
 
 on:
   push:
     branches:
-      - '1.33'
+      - 1.33
 
 jobs:
   version-or-publish:
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
+      - run: echo Triggered from /1.33 - on push of 1.33
       - name: Trigger doc update
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
           repository: vasfvitor/tauri-docs
           event-type: dispatch-test
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+          client-payload: '{"ref": "${{ github.ref }}"}'
+
