@@ -7,7 +7,7 @@ name: dispatch-test
 on:
   push:
     branches:
-      - '*'
+      - 'dev'
 
 jobs:
   version-or-publish:
@@ -20,4 +20,4 @@ jobs:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
           repository: vasfvitor/tauri-docs
           event-type: dispatch-test
-
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
