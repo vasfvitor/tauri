@@ -1,0 +1,23 @@
+# Copyright 2019-2023 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+name: dispatch-test
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  version-or-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - name: Trigger doc update
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.ORG_TAURI_BOT_PAT }}
+          repository: tauri-apps/tauri-docs
+          event-type: dispatch-test
+
