@@ -16,10 +16,10 @@ jobs:
     steps:
       - run: echo Triggered from /1.33 - on push of 1.33
       - name: Trigger doc update
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
           repository: vasfvitor/tauri-docs
           event-type: dispatch-test
-          client-payload: '{"ref": "${{ github.ref_name }}"}'
+          client-payload: '{"sha": "${{ github.sha }}"}'
 
