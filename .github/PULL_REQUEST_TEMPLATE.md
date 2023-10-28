@@ -28,5 +28,3 @@ Please make sure to read the Pull Request Guidelines: https://github.com/tauri-a
 - [ ] I have added a convincing reason for adding this feature, if necessary
 
 ### Other information
-
-x
