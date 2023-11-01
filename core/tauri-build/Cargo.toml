@@ -1,6 +1,6 @@
 [package]
 name = "tauri-build"
-version = "2.0.0-alpha.11"
+version = "2.0.0-alpha.10"
 description = "build time code to pair with https://crates.io/crates/tauri"
 exclude = [ "CHANGELOG.md", "/target" ]
 readme = "README.md"
@@ -14,22 +14,13 @@ rust-version = { workspace = true }
 
 [package.metadata.docs.rs]
 all-features = true
-default-target = "x86_64-unknown-linux-gnu"
-targets = [
-  "x86_64-pc-windows-msvc",
-  "x86_64-unknown-linux-gnu",
-  "x86_64-apple-darwin",
-  "x86_64-linux-android",
-  "x86_64-apple-ios"
-]
-rustc-args = [ "--cfg", "docsrs" ]
-rustdoc-args = [ "--cfg", "docsrs" ]
+rustdoc-args = [ "--cfg", "doc_cfg" ]
 
 [dependencies]
 anyhow = "1"
 quote = { version = "1", optional = true }
-tauri-codegen = { version = "2.0.0-alpha.10", path = "../tauri-codegen", optional = true }
-tauri-utils = { version = "2.0.0-alpha.10", path = "../tauri-utils", features = [ "build", "resources" ] }
+tauri-codegen = { version = "2.0.0-alpha.9", path = "../tauri-codegen", optional = true }
+tauri-utils = { version = "2.0.0-alpha.9", path = "../tauri-utils", features = [ "build", "resources" ] }
 cargo_toml = "0.16"
 serde = "1"
 serde_json = "1"

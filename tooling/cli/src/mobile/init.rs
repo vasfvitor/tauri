@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 use super::{get_app, Target};
-use crate::helpers::{app_paths::tauri_dir, config::get as get_tauri_config, template::JsonMap};
+use crate::helpers::{config::get as get_tauri_config, template::JsonMap};
 use crate::Result;
 use cargo_mobile2::{
   android::{
@@ -15,7 +15,6 @@ use cargo_mobile2::{
   util::{
     self,
     cli::{Report, TextWrapper},
-    relativize_path,
   },
 };
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
@@ -98,13 +97,6 @@ pub fn exec(
 
   let (handlebars, mut map) = handlebars(&app);
 
-  // the CWD used when the the IDE runs the android-studio-script or the xcode-script
-  let ide_run_cwd = if target == Target::Android {
-    tauri_dir()
-  } else {
-    tauri_dir().join("gen/apple")
-  };
-
   let mut args = std::env::args_os();
   let mut binary = args
     .next()
@@ -112,7 +104,7 @@ pub fn exec(
       let path = PathBuf::from(&bin);
       if path.exists() {
         let absolute_path = util::prefix_path(&current_dir, path);
-        return relativize_path(absolute_path, &ide_run_cwd).into_os_string();
+        return absolute_path.into();
       }
       bin
     })
@@ -122,16 +114,11 @@ pub fn exec(
     let path = PathBuf::from(&arg);
     if path.exists() {
       let absolute_path = util::prefix_path(&current_dir, path);
-      build_args.push(
-        relativize_path(absolute_path, &ide_run_cwd)
-          .to_string_lossy()
-          .into_owned(),
-      );
+      build_args.push(absolute_path.to_string_lossy().into_owned());
       continue;
     }
-    let is_mobile_cmd_arg = arg == "android" || arg == "ios";
     build_args.push(arg.to_string_lossy().into_owned());
-    if is_mobile_cmd_arg {
+    if arg == "android" || arg == "ios" {
       break;
     }
   }
@@ -176,6 +163,7 @@ pub fn exec(
     // Generate Android Studio project
     Target::Android => match AndroidEnv::new() {
       Ok(_env) => {
+        let app = get_app(tauri_config_);
         let (config, metadata) =
           super::android::get_config(&app, tauri_config_, &Default::default());
         map.insert("android", &config);
